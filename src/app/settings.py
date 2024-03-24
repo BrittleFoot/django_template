@@ -1,3 +1,4 @@
+from datetime import timedelta
 from pathlib import Path
 
 import environ
@@ -29,6 +30,7 @@ if DEBUG or env("CORS_ALLOW_ALL_ORIGINS", default=False):
 
 INTERNAL_APPS = [
     "books",
+    "users",
 ]
 
 THIRD_PARTY_APPS = [
@@ -42,7 +44,7 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "whitenoise",
     "corsheaders",
-    "oauth2_provider",
+    "rest_framework_simplejwt.token_blacklist",
 ]
 
 INSTALLED_APPS = INTERNAL_APPS + THIRD_PARTY_APPS
@@ -60,6 +62,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "djangorestframework_camel_case.middleware.CamelCaseMiddleWare",
 ]
 
 ROOT_URLCONF = "app.urls"
@@ -85,6 +88,36 @@ WSGI_APPLICATION = "app.wsgi.application"
 
 DATABASES = {
     "default": env.db(),
+}
+
+
+# Authentication
+
+AUTH_USER_MODEL = "users.User"
+
+SIMPLE_JWT = {
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=5),
+    "UPDATE_LAST_LOGIN": True,
+    "USER_ID_FIELD": "public_id",
+    "USER_ID_CLAIM": "public_id",
+    "CHECK_REVOKE_TOKEN": True,
+}
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    "ROTATE_REFRESH_TOKENS": True,
+    "DEFAULT_RENDERER_CLASSES": (
+        "djangorestframework_camel_case.render.CamelCaseJSONRenderer",
+        "djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer",
+    ),
+    "DEFAULT_PARSER_CLASSES": (
+        "djangorestframework_camel_case.parser.CamelCaseFormParser",
+        "djangorestframework_camel_case.parser.CamelCaseMultiPartParser",
+        "djangorestframework_camel_case.parser.CamelCaseJSONParser",
+    ),
 }
 
 
