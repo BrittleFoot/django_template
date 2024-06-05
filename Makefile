@@ -4,10 +4,10 @@ deps:
 	pip-sync requirements.txt requirements-dev.txt
 
 lint:
-	ruff lint src
+	ruff check src
 
 fix:
-	ruff format src && ruff lint src --fix
+	ruff format src && ruff check src --fix
 
 test:
 	pytest src $(ARGS)
