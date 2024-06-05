@@ -1,13 +1,13 @@
 deps:
 	pip-compile requirements.in
-	pip-compile dev-requirements.in
-	pip-sync requirements.txt dev-requirements.txt
+	pip-compile requirements-dev.in
+	pip-sync requirements.txt requirements-dev.txt
 
 lint:
-	ruff src $(ARGS)
+	ruff lint src
 
 fix:
-	ruff src --fix
+	ruff format src && ruff lint src --fix
 
 test:
 	pytest src $(ARGS)

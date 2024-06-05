@@ -6,3 +6,16 @@ line-length = 90
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "app.settings"
 pythonpath = "src"
+
+
+[tool.mypy]
+python_version = "3.12"
+plugins = [
+    "mypy_django_plugin.main",
+    "mypy_drf_plugin.main"
+]
+mypy_path = "src"
+ignore_missing_imports = true
+
+[tool.django-stubs]
+django_settings_module = "app.settings"

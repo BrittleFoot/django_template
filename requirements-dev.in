@@ -1,0 +1,12 @@
+ruff
+
+pytest
+pytest-cov
+pytest-django
+mixer
+
+mypy
+django-stubs[compatible-mypy]
+djangorestframework-stubs[compatible-mypy]
+
+ipython

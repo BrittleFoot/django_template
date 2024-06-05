@@ -42,7 +42,6 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "whitenoise",
     "corsheaders",
-    "oauth2_provider",
 ]
 
 INSTALLED_APPS = INTERNAL_APPS + THIRD_PARTY_APPS
